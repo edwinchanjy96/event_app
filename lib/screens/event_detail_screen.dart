@@ -150,34 +150,37 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                       fontSize: 14,
                     ),
                     info: '${widget.ticket.accessibility?.info}'),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: ConstrainedBox(
-                    constraints:
-                        BoxConstraints.tightFor(width: double.infinity),
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        if (await canLaunch(widget.ticket.url)) {
-                          launch(widget.ticket.url);
-                        }
-                      },
-                      child: Text(
-                        'BUY NOW',
-                        style: TextStyle(
-                            fontSize: 22, fontWeight: FontWeight.w400),
-                      ),
-                      style: ButtonStyle(
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(100.0),
+                Visibility(
+                  visible: widget.ticket.date.status != 'canceled' && widget.ticket.date.status != 'offsale',
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: ConstrainedBox(
+                      constraints:
+                          BoxConstraints.tightFor(width: double.infinity),
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          if (await canLaunch(widget.ticket.url)) {
+                            launch(widget.ticket.url);
+                          }
+                        },
+                        child: Text(
+                          'BUY NOW',
+                          style: TextStyle(
+                              fontSize: 22, fontWeight: FontWeight.w400),
+                        ),
+                        style: ButtonStyle(
+                            shape:
+                                MaterialStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(100.0),
+                              ),
                             ),
-                          ),
-                          // backgroundColor: MaterialStateProperty.all(Colors.red),
-                          padding: MaterialStateProperty.all(
-                              EdgeInsets.fromLTRB(50, 16, 50, 16)),
-                          textStyle: MaterialStateProperty.all(
-                              TextStyle(fontSize: 30))),
+                            // backgroundColor: MaterialStateProperty.all(Colors.red),
+                            padding: MaterialStateProperty.all(
+                                EdgeInsets.fromLTRB(50, 16, 50, 16)),
+                            textStyle: MaterialStateProperty.all(
+                                TextStyle(fontSize: 30))),
+                      ),
                     ),
                   ),
                 ),
