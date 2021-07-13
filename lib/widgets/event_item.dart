@@ -1,9 +1,7 @@
+import 'package:event_app/config/const.dart';
 import 'package:event_app/models/ticket_model.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:transparent_image/transparent_image.dart';
-
-enum statusCode {onsale, offsale, canceled, postponed, rescheduled}
 
 class EventItem extends StatelessWidget {
   final TicketModel item;
@@ -209,17 +207,11 @@ class StatusContainer extends StatelessWidget {
 
 
   Color colorDeterminer(String code){
-    String onsale = statusCode.onsale.toString().split('.').last;
-    String offsale = statusCode.offsale.toString().split('.').last;
-    String canceled = statusCode.canceled.toString().split('.').last;
-    String postponed = statusCode.postponed.toString().split('.').last;
-    String rescheduled = statusCode.rescheduled.toString().split('.').last;
-
-    if(code == onsale){
+    if(code == Const.onsale){
       return Colors.lightGreenAccent;
-    } else if(code == offsale || code == canceled){
+    } else if(code == Const.offsale || code == Const.canceled){
       return Colors.red;
-    } else if(code == postponed || code == rescheduled){
+    } else if(code == Const.postponed || code == Const.rescheduled){
       return Colors.orangeAccent;
     }
     return Colors.green;

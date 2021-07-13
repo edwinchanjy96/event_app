@@ -1,4 +1,4 @@
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:event_app/config/const.dart';
 import 'package:event_app/models/product_model.dart';
 import 'package:event_app/models/sales_model.dart';
 import 'package:event_app/models/ticket_model.dart';
@@ -8,8 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:map_launcher/map_launcher.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-enum statusCode {onsale, offsale, canceled, postponed, rescheduled}
 
 class EventDetailScreen extends StatefulWidget {
   final TicketModel ticket;
@@ -151,7 +149,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                     ),
                     info: '${widget.ticket.accessibility?.info}'),
                 Visibility(
-                  visible: widget.ticket.date.status != 'canceled' && widget.ticket.date.status != 'offsale',
+                  visible: widget.ticket.date.status != Const.offsale && widget.ticket.date.status != Const.canceled,
                   child: Padding(
                     padding: EdgeInsets.all(8.0),
                     child: ConstrainedBox(
@@ -244,11 +242,11 @@ class PriceGrid extends StatelessWidget {
               // style: DefaultTextStyle.of(context).style,
               children: <TextSpan>[
                 TextSpan(
-                    text: '${startDateTime}',
+                    text: startDateTime,
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 TextSpan(text: ' to '),
                 TextSpan(
-                    text: '${endDateTime}',
+                    text: endDateTime,
                     style: TextStyle(fontWeight: FontWeight.bold)),
               ],
             ),
@@ -363,17 +361,11 @@ class StatusContainer extends StatelessWidget {
 
 
   Color colorDeterminer(String code){
-    String onsale = statusCode.onsale.toString().split('.').last;
-    String offsale = statusCode.offsale.toString().split('.').last;
-    String canceled = statusCode.canceled.toString().split('.').last;
-    String postponed = statusCode.postponed.toString().split('.').last;
-    String rescheduled = statusCode.rescheduled.toString().split('.').last;
-
-    if(code == onsale){
+    if(code == Const.onsale){
       return Colors.lightGreenAccent;
-    } else if(code == offsale || code == canceled){
+    } else if(code == Const.offsale || code == Const.canceled){
       return Colors.red;
-    } else if(code == postponed || code == rescheduled){
+    } else if(code == Const.postponed || code == Const.rescheduled){
       return Colors.orangeAccent;
     }
     return Colors.green;
@@ -488,7 +480,7 @@ class DetailGridWithIcon extends StatelessWidget {
 }
 
 class ProductsGrid extends StatefulWidget {
-  List<ProductModel>? products;
+  final List<ProductModel>? products;
 
   ProductsGrid({
     Key? key,
@@ -557,7 +549,7 @@ class _ProductsGridState extends State<ProductsGrid> {
 }
 
 class PresalesGrid extends StatefulWidget {
-  List<Presales>? presales;
+  final List<Presales>? presales;
 
   PresalesGrid({
     Key? key,

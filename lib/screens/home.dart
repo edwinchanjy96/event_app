@@ -1,4 +1,3 @@
-import 'package:event_app/models/ticket_model.dart';
 import 'package:event_app/providers/ticket_provider.dart';
 import 'package:event_app/screens/event_detail_screen.dart';
 import 'package:event_app/widgets/event_item.dart';
