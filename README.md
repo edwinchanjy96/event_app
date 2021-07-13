@@ -10,3 +10,6 @@ Tools • Dart 2.13.4
 
 # Setup
 1. To run the project, run `flutter pub get` and build the project. No further action required.
+
+# Note
+Configuration is done for iOS but test is not done as I am building on Windows.
