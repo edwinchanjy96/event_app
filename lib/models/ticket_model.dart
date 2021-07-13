@@ -5,6 +5,7 @@ import 'package:event_app/models/location_model.dart';
 import 'package:event_app/models/product_model.dart';
 import 'package:event_app/models/promoter_model.dart';
 import 'package:event_app/models/sales_model.dart';
+import 'package:jiffy/jiffy.dart';
 
 class TicketModel {
   final String id;
@@ -138,10 +139,15 @@ class DateStartModel {
   });
 
   factory DateStartModel.fromJson(Map json) {
+    String formattedDateTime = '';
+
+    if(json['dateTime'] != null)
+      formattedDateTime = Jiffy(DateTime.parse(json['dateTime']).toLocal().toString()).format('yyyy-MM-dd HH:mm');
+
     return DateStartModel(
         localDate: json['localDate'],
         localTime: json['localTime'],
-        dateTime: json['dateTime'],
+        dateTime: formattedDateTime,
         dateTBD: json['dateTBD'],
         dateTBA: json['dateTBA'],
         timeTBA: json['timeTBA'],

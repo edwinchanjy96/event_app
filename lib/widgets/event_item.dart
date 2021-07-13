@@ -76,18 +76,18 @@ class EventItem extends StatelessWidget {
                             height: 8,
                           ),
                           Text(
-                            '${item.date.start.localDate}',
+                            '${item.date.start.dateTime}',
                             style: TextStyle(
                                 fontSize: 14, fontWeight: FontWeight.bold),
                             maxLines: 4,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          Text(
-                            '${item.date.start.localTime}',
-                            style: TextStyle(fontSize: 14),
-                            maxLines: 4,
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                          // Text(
+                          //   '${item.date.start.localTime}',
+                          //   style: TextStyle(fontSize: 14),
+                          //   maxLines: 4,
+                          //   overflow: TextOverflow.ellipsis,
+                          // ),
                           SizedBox(
                             height: 8,
                           ),

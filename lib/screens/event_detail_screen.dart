@@ -103,13 +103,19 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                       Text('${widget.ticket.location?.address.line1}'),
                       Text('${widget.ticket.location?.city?.name}'),
                       Text('${widget.ticket.location?.postalCode}'),
-                      Text('${widget.ticket.location?.state?.name}')
+                      Text('${widget.ticket.location?.state?.name}'),
+                      SizedBox(
+                        height: 4,
+                      ),
+                      Text('${widget.ticket.date.start.dateTime}', style: TextStyle(fontWeight: FontWeight.bold),)
                     ],
                   ),
                 ),
                 PriceGrid(
                     title: 'Price',
                     status: widget.ticket.date.status,
+                    startDateTime : widget.ticket.sales.public?.startDateTime ?? '',
+                    endDateTime: widget.ticket.sales.public?.endDateTime ?? '',
                     info: widget.ticket.priceRange != null
                         ? '${widget.ticket.priceRange?.minPrice} - ${widget.ticket.priceRange?.maxPrice} ${widget.ticket.priceRange?.currency}'
                         : 'N/A'),
@@ -187,9 +193,11 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
 class PriceGrid extends StatelessWidget {
   final String title;
   final String status;
+  final String startDateTime;
+  final String endDateTime;
   final String info;
 
-  PriceGrid({Key? key, required this.title, required this.status, required this.info})
+  PriceGrid({Key? key, required this.title, required this.status, required this.startDateTime, required this.endDateTime, required this.info})
       : super(key: key);
 
   @override
@@ -205,7 +213,7 @@ class PriceGrid extends StatelessWidget {
       width: double.infinity,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -221,6 +229,26 @@ class PriceGrid extends StatelessWidget {
               ),
               StatusContainer(code: status),
             ],
+          ),
+          SizedBox(
+            height: 8,
+          ),
+          if(startDateTime.isNotEmpty && endDateTime.isNotEmpty)
+          RichText(
+            text: TextSpan(
+              text: 'Sales from ',
+              style: TextStyle(fontSize: 14, color: Colors.black),
+              // style: DefaultTextStyle.of(context).style,
+              children: <TextSpan>[
+                TextSpan(
+                    text: '${startDateTime}',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                TextSpan(text: ' to '),
+                TextSpan(
+                    text: '${endDateTime}',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+              ],
+            ),
           ),
         ],
       ),
