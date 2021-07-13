@@ -40,6 +40,7 @@ class _HomeState extends State<Home> {
         inBar: false,
         buildDefaultAppBar: buildAppBar,
         setState: setState,
+        hintText: 'Search for artists, venues and events',
         onSubmitted: onSubmitted,
         onCleared: () {
           final ticketProvider =

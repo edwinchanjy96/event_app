@@ -27,8 +27,13 @@ class Public {
       required this.endDateTime});
 
   factory Public.fromJson(Map json) {
-    String formattedStartDateTime = Jiffy(DateTime.parse(json['startDateTime']).toLocal().toString()).format('yyyy-MM-dd HH:mm');
-    String formattedEndDateTime = Jiffy(DateTime.parse(json['endDateTime']).toLocal().toString()).format('yyyy-MM-dd HH:mm');
+    String formattedStartDateTime = '';
+    String formattedEndDateTime = '';
+
+    if(json['startDateTime'] != null)
+    formattedStartDateTime = Jiffy(DateTime.parse(json['startDateTime']).toLocal().toString()).format('yyyy-MM-dd HH:mm');
+    if(json['endDateTime'] != null)
+    formattedEndDateTime = Jiffy(DateTime.parse(json['endDateTime']).toLocal().toString()).format('yyyy-MM-dd HH:mm');
     return Public(
         startTBD: json['startTBD'],
         startTBA: json['startTBA'],
@@ -43,21 +48,33 @@ class Presales {
   String name;
   String? description;
   String? url;
+  bool isExpanded;
 
   Presales(
       {required this.startDateTime,
       required this.endDateTime,
       required this.name,
       required this.description,
-      required this.url});
+      required this.url,
+      required this.isExpanded
+      });
 
   factory Presales.fromJson(Map json) {
+    String formattedStartDateTime = '';
+    String formattedEndDateTime = '';
+
+    if(json['startDateTime'] != null)
+      formattedStartDateTime = Jiffy(DateTime.parse(json['startDateTime']).toLocal().toString()).format('yyyy-MM-dd HH:mm');
+    if(json['endDateTime'] != null)
+      formattedEndDateTime = Jiffy(DateTime.parse(json['endDateTime']).toLocal().toString()).format('yyyy-MM-dd HH:mm');
     return Presales(
-        startDateTime: json['startDateTime'],
-        endDateTime: json['endDateTime'],
+        startDateTime: formattedStartDateTime,
+        endDateTime: formattedEndDateTime,
         name: json['name'] ?? '',
         description: json['description'] ?? '',
-        url: json['url'] ?? '');
+        url: json['url'] ?? '',
+        isExpanded: false
+    );
   }
 
   static List<Presales> retrievePresalesList(List presale) {

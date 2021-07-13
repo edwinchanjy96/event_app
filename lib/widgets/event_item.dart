@@ -92,7 +92,7 @@ class EventItem extends StatelessWidget {
                             height: 8,
                           ),
                           Visibility(
-                            visible: item.sales.public != null,
+                            visible: item.sales.public != null && item.sales.public!.startDateTime.isNotEmpty,
                             child: RichText(
                               text: TextSpan(
                                 text: 'Sales from\n',

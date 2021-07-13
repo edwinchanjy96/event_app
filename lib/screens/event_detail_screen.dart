@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:event_app/models/product_model.dart';
+import 'package:event_app/models/sales_model.dart';
 import 'package:event_app/models/ticket_model.dart';
 import 'package:event_app/screens/view_seatmap_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -112,42 +113,37 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                     info: widget.ticket.priceRange != null
                         ? '${widget.ticket.priceRange?.minPrice} - ${widget.ticket.priceRange?.maxPrice} ${widget.ticket.priceRange?.currency}'
                         : 'N/A'),
-                Visibility(visible: widget.ticket.seatMap != null, child: SeatMapGrid(seatMapUrl: widget.ticket.seatMap?.staticUrl)),
-                Visibility(
-                    visible: widget.ticket.products!.isNotEmpty,
-                    child: ProductsGrid(
-                        title: 'Add-on', products: widget.ticket.products)),
-                Visibility(
-                  visible: widget.ticket.info.isNotEmpty,
-                  child: DetailGrid(
-                      title: 'Info',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14,
-                      ),
-                      info: '${widget.ticket.info}'),
-                ),
-                Visibility(
-                  visible: widget.ticket.pleaseNote.isNotEmpty,
-                  child: DetailGrid(
-                      title: 'Note',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14,
-                      ),
-                      info: '${widget.ticket.pleaseNote}'),
-                ),
-                Visibility(
-                  visible: widget.ticket.accessibility != null,
-                  child: DetailGrid(
-                      title:
-                          'Accessibility (Ticket Limits: ${widget.ticket.accessibility?.ticketLimit})',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14,
-                      ),
-                      info: '${widget.ticket.accessibility?.info}'),
-                ),
+                if(widget.ticket.seatMap != null)
+                SeatMapGrid(seatMapUrl: widget.ticket.seatMap?.staticUrl),
+                if(widget.ticket.products!.isNotEmpty)
+                ProductsGrid(products: widget.ticket.products),
+                if(widget.ticket.sales.presales != null && widget.ticket.sales.presales!.isNotEmpty)
+                PresalesGrid(presales: widget.ticket.sales.presales,),
+                if(widget.ticket.info.isNotEmpty)
+                DetailGrid(
+                    title: 'Info',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                    ),
+                    info: '${widget.ticket.info}'),
+                if(widget.ticket.pleaseNote.isNotEmpty)
+                DetailGrid(
+                    title: 'Note',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                    ),
+                    info: '${widget.ticket.pleaseNote}'),
+                if(widget.ticket.accessibility != null)
+                DetailGrid(
+                    title:
+                        'Accessibility (Ticket Limits: ${widget.ticket.accessibility?.ticketLimit})',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                    ),
+                    info: '${widget.ticket.accessibility?.info}'),
                 Padding(
                   padding: EdgeInsets.all(8.0),
                   child: ConstrainedBox(
@@ -461,12 +457,10 @@ class DetailGridWithIcon extends StatelessWidget {
 }
 
 class ProductsGrid extends StatefulWidget {
-  final String title;
   List<ProductModel>? products;
 
   ProductsGrid({
     Key? key,
-    required this.title,
     this.products,
   }) : super(key: key);
 
@@ -521,6 +515,96 @@ class _ProductsGridState extends State<ProductsGrid> {
                 body: Text(
                   item.name,
                   textAlign: TextAlign.center,
+                ),
+              );
+            }).toList(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class PresalesGrid extends StatefulWidget {
+  List<Presales>? presales;
+
+  PresalesGrid({
+    Key? key,
+    this.presales,
+  }) : super(key: key);
+
+  @override
+  _PresalesGridState createState() => _PresalesGridState();
+}
+
+class _PresalesGridState extends State<PresalesGrid> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(8),
+      padding: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      width: double.infinity,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Presales',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+          ),
+          ExpansionPanelList(
+            elevation: 0,
+            dividerColor: Colors.grey,
+            expansionCallback: (int index, bool isExpanded) {
+              setState(() {
+                widget.presales![index].isExpanded =
+                !widget.presales![index].isExpanded;
+              });
+            },
+            children: widget.presales!.map((item) {
+              return ExpansionPanel(
+                headerBuilder: (BuildContext context, bool isExpanded) {
+                  return ListTile(
+                      title: Text(
+                        item.name,
+                        textAlign: TextAlign.left,
+                        style: new TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                  );
+                },
+                isExpanded: item.isExpanded,
+                body: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item.description ?? 'No description',
+                      textAlign: TextAlign.justify,
+                      style: new TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 4,
+                    ),
+                    Text(
+                      'From ${item.startDateTime} to ${item.endDateTime}',
+                      textAlign: TextAlign.left,
+                      style: new TextStyle(
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
                 ),
               );
             }).toList(),
