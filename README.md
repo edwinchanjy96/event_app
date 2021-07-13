@@ -13,3 +13,4 @@ Tools • Dart 2.13.4
 
 # Note
 Configuration is done for iOS but test is not done as I am building on Windows.
+In this app, I use Provider as the state management as that is what I'm familiar with.
