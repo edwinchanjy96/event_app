@@ -367,7 +367,7 @@ class StatusContainer extends StatelessWidget {
         children: [
           Text(
             code.toUpperCase(),
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.black),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Colors.black),
           ),
         ],
       ),
