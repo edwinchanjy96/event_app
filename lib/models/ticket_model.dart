@@ -1,4 +1,4 @@
-import 'package:event_app/config/const.dart';
+import 'package:event_app/config/util.dart';
 import 'package:event_app/models/attraction_model.dart';
 import 'package:event_app/models/classification_model.dart';
 import 'package:event_app/models/image_model.dart';
@@ -6,7 +6,6 @@ import 'package:event_app/models/location_model.dart';
 import 'package:event_app/models/product_model.dart';
 import 'package:event_app/models/promoter_model.dart';
 import 'package:event_app/models/sales_model.dart';
-import 'package:jiffy/jiffy.dart';
 
 class TicketModel {
   final String id;
@@ -143,7 +142,7 @@ class DateStartModel {
     String formattedDateTime = '';
 
     if(json['dateTime'] != null)
-      formattedDateTime = Const.dateTimeFormatter(json['dateTime']);
+      formattedDateTime = Util.dateTimeFormatter(json['dateTime']);
 
     return DateStartModel(
         localDate: json['localDate'],
