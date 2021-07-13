@@ -1,3 +1,4 @@
+import 'package:event_app/config/const.dart';
 import 'package:event_app/models/attraction_model.dart';
 import 'package:event_app/models/classification_model.dart';
 import 'package:event_app/models/image_model.dart';
@@ -142,7 +143,7 @@ class DateStartModel {
     String formattedDateTime = '';
 
     if(json['dateTime'] != null)
-      formattedDateTime = Jiffy(DateTime.parse(json['dateTime']).toLocal().toString()).format('yyyy-MM-dd HH:mm');
+      formattedDateTime = Const.dateTimeFormatter(json['dateTime']);
 
     return DateStartModel(
         localDate: json['localDate'],

@@ -1,3 +1,4 @@
+import 'package:event_app/config/const.dart';
 import 'package:jiffy/jiffy.dart';
 
 class SalesModel {
@@ -30,9 +31,9 @@ class Public {
     String formattedEndDateTime = '';
 
     if(json['startDateTime'] != null)
-    formattedStartDateTime = Jiffy(DateTime.parse(json['startDateTime']).toLocal().toString()).format('yyyy-MM-dd HH:mm');
+    formattedStartDateTime =  Const.dateTimeFormatter(json['startDateTime']);
     if(json['endDateTime'] != null)
-    formattedEndDateTime = Jiffy(DateTime.parse(json['endDateTime']).toLocal().toString()).format('yyyy-MM-dd HH:mm');
+    formattedEndDateTime =  Const.dateTimeFormatter(json['endDateTime']);
     return Public(
         startTBD: json['startTBD'],
         startTBA: json['startTBA'],
@@ -63,9 +64,10 @@ class Presales {
     String formattedEndDateTime = '';
 
     if(json['startDateTime'] != null)
-      formattedStartDateTime = Jiffy(DateTime.parse(json['startDateTime']).toLocal().toString()).format('yyyy-MM-dd HH:mm');
+      formattedStartDateTime = Const.dateTimeFormatter(json['startDateTime']);
     if(json['endDateTime'] != null)
-      formattedEndDateTime = Jiffy(DateTime.parse(json['endDateTime']).toLocal().toString()).format('yyyy-MM-dd HH:mm');
+      formattedEndDateTime = Const.dateTimeFormatter(json['endDateTime']);
+
     return Presales(
         startDateTime: formattedStartDateTime,
         endDateTime: formattedEndDateTime,
